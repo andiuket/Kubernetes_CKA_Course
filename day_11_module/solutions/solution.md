@@ -31,7 +31,7 @@ Step 3.
 
 Create the pod and confirm that pod is created and running.
 
-kubectl apply -f <name of yaml>
+kubectl apply -f pod.yaml
 
 kubectl get pod
 
@@ -43,10 +43,13 @@ Step 4.
 kubectl create deploy nginx-deploy --image nginx --port 80 && kubectl get deploy/nginx-deploy
 
 #To create a service in the ns1 namespace
+
 kubectl apply -f myservice.yaml -n ns1
 
 #To check that the pod is running as well as the two containers.
+
 kubectl get pod/myapp
+
 kubectl describe pod/myapp
 
 
