@@ -5,20 +5,20 @@
   Create a pod and try to schedule it manually without the scheduler.
 
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx-pod
-  labels:
-    app: v1
-    tier: frontend
-spec:
-  nodeName: kind-cka-cluster3-worker
-  containers:
-  - image: nginx
-    name: nginx-container
-    ports:
-    - containerPort: 80
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: nginx-pod
+    labels:
+      app: v1
+      tier: frontend
+  spec:
+    nodeName: kind-cka-cluster3-worker
+    containers:
+    - image: nginx
+      name: nginx-container
+      ports:
+      - containerPort: 80
 
 #Task 2
 
