@@ -10,20 +10,22 @@ create a pod with nginx as the image and add the nodeffinity with property requi
 
 Step 1
 
+    nginx-pod yaml
+
     apiVersion: v1
     kind: Pod
     metadata:
-    name: nginx-pod
+      name: nginx-pod
     spec:
-    containers:
-    - image: nginx
+      containers:
+      - image: nginx
         name: nginx-pod
-    affinity:
+      affinity:
         nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-            - key: disktype
+              - key: disktype
                 operator: In
                 values:
                 - ssd
@@ -48,4 +50,36 @@ create a new pod with redis as the image and add the nodeaffinity with property 
     ensure that pod2 should be scheduled on worker02 node
 
 Steps: 
+
+redis pod yaml
+    
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: redis-pod
+    spec:
+      containers:
+      - image: redis
+        name: redis-pod
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: disktype
+                operator: Exist
+    
+    kubectl apply -f redis-pod.yaml
+
+    kubectl get pod/redis-pod
+
+        NAME        READY   STATUS    RESTARTS   AGE
+        redis-pod   0/1     Pending   0          17s
+    
+    kubectl label node cka-cluster-multin-worker2 disktype=
+
+    kubectl get pod/redis-pod
+
+        NAME        READY   STATUS    RESTARTS   AGE
+        redis-pod   1/1     Running   0          3m32s
 
